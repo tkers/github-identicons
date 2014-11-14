@@ -8,7 +8,7 @@
 // dependency
 var fs  = require("fs");
 var PNG = require("pngjs").PNG;
-var createIdenticon = require("./index");
+var createIdenticon = require("../index");
 
 function save(identicon, fname) {
 
