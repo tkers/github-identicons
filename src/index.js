@@ -56,9 +56,6 @@ function createIdenticon(username) {
     // convert to rgb
     var rgb = hsv2rgb(hue, sat, val);
 
-    console.log("hsv", hue, sat, val);
-    console.log("rgb", rgb);
-
     // return the pixel mask and colour
     return {
         mask  : pixels,
