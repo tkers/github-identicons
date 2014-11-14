@@ -4,8 +4,10 @@
   "description": "A NodeJS implementation of GitHub-like Identicons",
   "author": "Tijn Kersjes",
   "dependencies": {
-    "crypto": "0.0.3",
-    "pngjs": "~0.4.0"
+    "crypto": "~0.0.3"
+  },
+  "devDependencies" : {
+     "pngjs": "~0.4.0"
   },
   "main": "index.js",
   "engines": {
