@@ -133,8 +133,8 @@ function saveIdenticon(img, fname) {
     // create PNG
     var png = new PNG({
         filterType: -1,
-        width : 5 * scale,
-        height : 5 * scale
+        width : 6 * scale,
+        height : 6 * scale
     });
 
     // create image buffer from identicon
@@ -142,9 +142,12 @@ function saveIdenticon(img, fname) {
         for (var x = 0; x < png.width; x++) {
             var i = (png.width * y + x) << 2;
 
-            var xx = Math.floor(x / scale);
-            var yy = Math.floor(y / scale);
-            var colour = img.pixels[yy][xx] ? img.colour : bg;
+            var xx = Math.floor((x - scale / 2) / scale);
+            var yy = Math.floor((y - scale / 2) / scale);
+
+            var colour = bg;
+            if (xx >= 0 && xx < 5 && yy >= 0 && yy < 5)
+                colour = img.pixels[yy][xx] ? img.colour : bg;
 
             png.data[i]   = colour.red;
             png.data[i+1] = colour.green;
