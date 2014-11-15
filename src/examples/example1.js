@@ -10,6 +10,21 @@ var fs  = require("fs");
 var PNG = require("pngjs").PNG;
 var createIdenticon = require("../index");
 
+// create some files to try it out!
+var time = new Date().getTime();
+var n = 5;
+
+// n goes to zero
+while (n --> 0) {
+
+    var username = (time - n).toString();
+    var identicon = createIdenticon(username);
+    save(identicon, username + ".png");
+
+    console.log(username + ".png");
+}
+
+// write an identicon to PNG file
 function save(identicon, fname) {
 
     // size of every 'pixel'
@@ -20,7 +35,7 @@ function save(identicon, fname) {
         r : 242,
         g : 242,
         b : 242
-    }
+    };
 
     // create PNG
     var png = new PNG({
@@ -51,20 +66,4 @@ function save(identicon, fname) {
     // write image to file
     var out = fs.createWriteStream(fname);
     png.pack().pipe(out);
-}
-
-/** ------------------------------ **/
-
-// create some files to try it out!
-var time = new Date().getTime();
-var n = 5;
-
-// n goes to zero
-while (n --> 0) {
-
-    var username = (time - n).toString();
-    var identicon = createIdenticon(username);
-    save(identicon, username + ".png");
-
-    console.log(username + ".png");
 }
