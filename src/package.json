@@ -1,8 +1,12 @@
 {
   "name": "github-like-identicons",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A NodeJS implementation of GitHub-like Identicons",
   "author": "Tijn Kersjes",
+  "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/Lapixx/github-identicons.git"
+  },
   "dependencies": {
     "crypto": "~0.0.3"
   },
