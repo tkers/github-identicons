@@ -18,15 +18,14 @@ function createIdenticon(username) {
     var hash = crypto.createHash("md5").update(username).digest("hex");
 
     // HEX to intarray
-    var ints = hash.split("").map(function (char) {
-        return parseInt(char, 16);
-    });
-
-    var invert = ints[0] % 2;
+    var bytes = [];
+    for (var i = 0; i < 16; i++) {
+        bytes[i] = parseInt(hash.substr(i*2, 2), 16);
+    }
 
     // convert to mask
-    var mask = ints.map(function (x) {
-        return (x % 2 === invert);
+    var bools = bytes.map(function (b) {
+        return (b % 2 !== 0)
     });
 
     // build 3x5 matrix
@@ -34,7 +33,7 @@ function createIdenticon(username) {
     for (var y = 0; y < 5; y++) {
         matrix[y] = [];
         for (var x = 0; x < 3; x++) {
-            matrix[y][x] = mask[1 + 3*y + x];
+            matrix[y][x] = bools[1 + 3*y + x];
         }
     }
 
@@ -43,15 +42,10 @@ function createIdenticon(username) {
         return row.concat([row[1], row[0]]);
     });
 
-    // generate RGB
-    var red   = 16 * ints[16] + ints[17];
-    var green = 16 * ints[18] + ints[19];
-    var blue  = 16 * ints[20] + ints[21];
-
-    // extract hue and use static sat and val
-    var hue = rgb2hue(red, green, blue);
-    var sat = 115;
-    var val = 204;
+    // get hue, saturation and value
+    var hue = bytes[15];
+    var sat = 120;
+    var val = 200;
 
     // convert to rgb
     var rgb = hsv2rgb(hue, sat, val);
@@ -68,33 +62,6 @@ function createIdenticon(username) {
             v : val
         }
     };
-}
-
-function rgb2hue (r, g, b) {
-
-    var hi = Math.max(r, g, b);
-    var lo = Math.min(r, g, b);
-
-    // achromatic - use the luminosity as hue
-    if (hi === lo)
-        return hi;
-
-    var hue;
-
-    // red ish
-    if (hi === r)
-        hue = (g - b) / (hi - lo) + (g < b ? 6 : 0);
-
-    // green ish
-    else if (hi === g)
-        hue = (b - r) / (hi - lo) + 2;
-
-    // blue ish
-    else if (hi === b)
-        hue = (r - g) / (hi - lo) + 4;
-
-    // return as byte
-    return Math.round(hue * 42.5);
 }
 
 function hsv2rgb(h, s, v) {
