@@ -17,7 +17,9 @@ console.log(icon); // { mask : [], color : {} }
 ## API
 This module exposes a single function to generate the identicon for a given username.
 
-### createIdenticon(username)
+### createIdenticon(username, algorithm)
+Algorithm: (optional) either `md5`, `sha1`, `sha256`, `sha512`.
+
 Returns an object containing:
 
 - **mask**: A 5x5 nested array containing booleans indicating if a pixel is part of the identicon (true) or the background (false)

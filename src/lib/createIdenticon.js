@@ -8,14 +8,18 @@
 // dependencies
 var crypto = require("crypto");
 
-function createIdenticon(username) {
+function createIdenticon(username, alg) {
+
+    // fall back to md5
+    if (alg !== "sha1" && alg !== "sha256" && alg !== "sha512")
+        alg = "md5";
 
     // convert to string when needed
     if (typeof username !== "string")
         username = username.toString();
 
     // get MD5 hash of username in HEX format
-    var hash = crypto.createHash("md5").update(username).digest("hex");
+    var hash = crypto.createHash(alg).update(username).digest("hex");
 
     // HEX to intarray
     var bytes = [];
